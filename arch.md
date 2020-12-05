@@ -289,6 +289,7 @@
 * install man pages (`man-db`)
 
 * install ntfs-3g (open inline terminal under Dolphin)
+
 ## Configurations and Desktop
 
 ### Reboot
@@ -363,13 +364,10 @@
 
         `sudo vim ~/.vnc/config` (the session name could be seen in the prefix in .desktop file within `/usr/share/xsessions`)
 
-        
-
             session=plasma
-        geometry=1920x1080
+            geometry=1920x1080
             localhost
-            alwaysshared
-        
+            alwaysshared        
         
         `systemctl start vncserver@:1`(Start vncserver on display 1)
         
@@ -380,7 +378,8 @@
         `sudo systemctl enable x11vnc` (Start x11vnc on display 1 on boot)
         
         `systemctl status vncserver@:1` and `systemctl status x11vnc` (check x11vnc status)
-             <!-- `x11vnc -rfbauth ~/.vnc/passwd -display :1` (start x11vnc) -->
+        
+         <!-- `x11vnc -rfbauth ~/.vnc/passwd -display :1` (start x11vnc) -->
                 
         
     * on host:
@@ -404,7 +403,6 @@
         Note: in this case, no need to execute x11vnc -rfb... command
 
     Note: 
-        
 
     * I've tried qemu display mode, and found couldn't open the display both on vnc and macos CLI qemu at the same time 
     * If CLI qemu is opened, vnc won't work and vice versa
@@ -440,4 +438,4 @@ Reddit
 
 Others
 
-* [Arch Linux How to Install Yay](`https://low-orbit.net/arch-linux-how-to-install-yay`)
+* [Arch Linux How to Install Yay](https://low-orbit.net/arch-linux-how-to-install-yay)
