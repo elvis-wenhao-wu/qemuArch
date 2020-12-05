@@ -14,12 +14,12 @@
     * Update latest arch database
         `pacman -Syy`
     * Install necessary package to continue
-        `pacman -S reflector git`
-        Note: wait for a sec to let reflector do its job after pacman
+        `pacman -S git`
+        Note: reflector no longer works on Big Sur (saw it somewhere online), if it works, install it and update mirrors in the below steps
         Note: `reflector` to update mirror channels and `git` for cloning preparation repo
-    * Update mirrors (servers to download programs)
-        `sudo reflector --country 'Australia' -f 12 -l 12 -p http -n 12 --verbose --save /etc/pacman.d/mirrorlist`
-        Note: to see the effects, enter `cat /etc/pacman.d/mirrorlist`
+    <!-- * Update mirrors (servers to download programs) -->
+    <!--     `sudo reflector --country 'Australia' -f 12 -l 12 -p http -n 12 --verbose --save /etc/pacman.d/mirrorlist` -->
+    <!--     Note: to see the effects, enter `cat /etc/pacman.d/mirrorlist` -->
 
 ### Boot 
     * partition table
@@ -81,16 +81,8 @@
         `useradd -m -g users -G adm,storage,wheel,power,audio,video -s /bin/bash wenhaowu`
         `passwd wenhaowu`
     * install more packages
-        `pacman -S reflector rsync git mlocate wireless_tools wpa_supplicant dialog --noconfirm`
+        `pacman -S rsync git mlocate wireless_tools wpa_supplicant dialog --noconfirm`
         `updatedb`
-    * formatting
-        `vim /usr/bin/mirrors` and add 
-            `#!/bin/bash`
-            `sudo reflector -c 'Australia' -f 12 -l 12 -p http -n 12 --verbose --save /etc/pacman.d/mirrorlist`
-            `cat /etc/pacman.d/mirrorlist`
-        `chmod +x /usr/bin/mirrors`
-        `touch /etc/vconsole.conf`
-        `echo FONT=iso02-12x22 > /etc/vconsole.conf`
     * install x components
         `pacman -S ttf-dejavu alsa-utils xorg xorg-server xorg-xinit xorg-twm xterm xorg-server-devel`
     * install grub and os-prober
