@@ -87,13 +87,13 @@
     Uncomment the following two lines 
 
         en_US.UTF-8 UTF-8
-    en_US ISO-8859-1
+        en_US ISO-8859-1
+    `locale-gen`
     
-`locale-gen`
+    `locale > /etc/locale.conf`
     
-`locale > /etc/locale.conf`
-    
-`cat /etc/locale.conf`
+    `cat /etc/locale.conf`
+        
     
 * disable sudo password
 
@@ -119,25 +119,21 @@
 
     Add the followings
 
-        ```
         #<ip-address>    <hostname.domain.org>    <hostname>
         127.0.0.1        mbp.localdomain          mbp
         ::1              localhost.localdomain    localhost
-    
+        
         # End of file
-        ```
 
     Alternatively,
 
-        ```
         #<ip-address>    <hostname.domain.org>    <hostname>
         127.0.0.1        localhost.localdomain    localhost
         ::1              localhost.localdomain    localhost
         127.0.1.1        localhost.localdomain    mbp
-    
+        
         # End of file
-        ```
-    
+
 * add user
 
     `useradd -m -g users -G adm,storage,wheel,power,audio,video -s /bin/bash wenhaowu`
@@ -266,34 +262,33 @@
         -cpu Penryn,kvm=on,vendor=GenuineIntel \
         -net user,hostfwd=tcp::2222-:22 -net nic \
         -boot c archlinux
-```
+    ```
     
-* install yay
-
-    * Upgrade your system
-
-        `sudo pacman -Syyu`
-
-    * Clone yay repo
-
-        `git clone https://aur.archlinux.org/yay.git`
-
-    * Install yay
-
-        `cd yay`
-
-        `makepkg -si`
-
-* install openssh
-
-* install tigervnc
-
-* install x11vnc
-
-* install man pages (`man-db`)
-
-* install ntfs-3g (open inline terminal under Dolphin)
-
+    * install yay
+    
+        * Upgrade your system
+    
+            `sudo pacman -Syyu`
+    
+        * Clone yay repo
+    
+            `git clone https://aur.archlinux.org/yay.git`
+    
+        * Install yay
+    
+            `cd yay`
+    
+            `makepkg -si`
+    
+    * install openssh
+    
+    * install tigervnc
+    
+    * install x11vnc
+    
+    * install man pages (`man-db`)
+    
+    * install ntfs-3g (open inline terminal under Dolphin)
 ## Configurations and Desktop
 
 ### Reboot
@@ -338,6 +333,8 @@
 
     use `sudo poweroff` to shutdown the virtual machine
 
+### SSH & VNC
+
 * ssh from host (macbook) to guest (arch linux)
 
     * on guest:
@@ -364,57 +361,54 @@
 
         `sudo vim /etc/tigervnc/vncserver.users` to define user mappings, e.g. :1 wenhaowu
 
-        `sudo vim ~/.vnc/config` (the session name could be seen in the prefix in .desktop file within /usr/share/xsessions)
+        `sudo vim ~/.vnc/config` (the session name could be seen in the prefix in .desktop file within `/usr/share/xsessions`)
 
             session=plasma
-    geometry=1920x1080
+        geometry=1920x1080
             localhost
-    alwaysshared
+        alwaysshared
+        `systemctl start vncserver@:1`(Start vncserver on display 1)
         
-`systemctl start vncserver@:1`(Start vncserver on display 1)
+        `sudo systemctl enable vncserver@:1`(Start vncserver on display 1 on boot)
         
-`sudo systemctl enable vncserver@:1`(Start vncserver on display 1 on boot)
+        `systemctl start x11vnc` (Start x11vnc on display 1)
         
-`systemctl start x11vnc` (Start x11vnc on display 1)
+        `sudo systemctl enable x11vnc` (Start x11vnc on display 1 on boot)
         
-`sudo systemctl enable x11vnc` (Start x11vnc on display 1 on boot)
+        `systemctl status vncserver@:1` and `systemctl status x11vnc` (check x11vnc status)
+             <!-- `x11vnc -rfbauth ~/.vnc/passwd -display :1` (start x11vnc) -->
+                
         
-`systemctl status vncserver@:1` and `systemctl status x11vnc` (check x11vnc status)
+    * on host:
+
+        connect vncserver by `localhost:5901` (because you set the display to 1)
+
+        Note: use a full feature vncviewer client
+
+        Example usage in mac screens app:
+
+        * General Info
+
+            address: localhost; Port: 5901; Operating System: Linux; Authentication type: VNC Password
+
+        * Secure Connection
+
+            Checked `Enable Secure Connections`; Address: localhost; Port: 2222; Username: ...; Password: ...;
+
+            Note: remember you set qemu port forwarding (2222 to 22)
+
+        Note: in this case, no need to execute x11vnc -rfb... command
+
+    Note: 
         
-<!-- `x11vnc -rfbauth ~/.vnc/passwd -display :1` (start x11vnc) -->
-        
-* on host:
-    
-    connect vncserver by `localhost:5901` (because you set the display to 1)
-    
-    Note: use a full feature vncviewer client
-    
-    Example usage in mac screens app:
-    
-    * General Info
-    
-        address: localhost; Port: 5901; Operating System: Linux; Authentication type: VNC Password
-    
-    * Secure Connection
-    
-        Checked `Enable Secure Connections`; Address: localhost; Port: 2222; Username: ...; Password: ...;
-    
-        Note: remember you set qemu port forwarding (2222 to 22)
-    
-    Note: in this case, no need to execute x11vnc -rfb... command
-    
-Note: 
-    
-* I've tried qemu display mode, and found couldn't open the display both on vnc and macos CLI qemu at the same time 
-    
-* If CLI qemu is opened, vnc won't work and vice versa
-    
-* If vnc works, then CLI qemu may be black screen. To make CLI qemu work again, comment out settings in /etc/tigervnc/vncserver.users
-    
-    Reference: 
-    
+
+    * I've tried qemu display mode, and found couldn't open the display both on vnc and macos CLI qemu at the same time 
+    * If CLI qemu is opened, vnc won't work and vice versa
+    * If vnc works, then CLI qemu may be black screen. To make CLI qemu work again, comment out settings in /etc/tigervnc/vncserver.users
+
+### References: 
+
 - [tigervnc, i.e. vncserver](https://wiki.archlinux.org/index.php/TigerVNC)
-    
 * X11 forwarding (ToDo)
 
 ## References
