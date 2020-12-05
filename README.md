@@ -8,7 +8,7 @@ Note: Most parts of this guide is the transcripts of two videos by Midfingr
 Tested on Macbook Pro, Early 2015, Retina, 13-inch, 16GB (Big Sur 11.0.1)
 
 Added parts are 
-* several steps updated in 2020 to make the above videos run successfully (the videos above were made in 2015)
+* Several steps updated in 2020 to make the above videos run successfully (the videos above were made in 2015)
 * Plasma Installation
 * Headless run & SSH
 * VNC through Screens (an app on MacOS)
