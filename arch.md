@@ -264,31 +264,31 @@
         -boot c archlinux
     ```
     
-    * install yay
-    
-        * Upgrade your system
-    
-            `sudo pacman -Syyu`
-    
-        * Clone yay repo
-    
-            `git clone https://aur.archlinux.org/yay.git`
-    
-        * Install yay
-    
-            `cd yay`
-    
-            `makepkg -si`
-    
-    * install openssh
-    
-    * install tigervnc
-    
-    * install x11vnc
-    
-    * install man pages (`man-db`)
-    
-    * install ntfs-3g (open inline terminal under Dolphin)
+* install yay
+
+    * Upgrade your system
+
+        `sudo pacman -Syyu`
+
+    * Clone yay repo
+
+        `git clone https://aur.archlinux.org/yay.git`
+
+    * Install yay
+
+        `cd yay`
+
+        `makepkg -si`
+
+* install openssh
+
+* install tigervnc
+
+* install x11vnc
+
+* install man pages (`man-db`)
+
+* install ntfs-3g (open inline terminal under Dolphin)
 ## Configurations and Desktop
 
 ### Reboot
@@ -363,10 +363,14 @@
 
         `sudo vim ~/.vnc/config` (the session name could be seen in the prefix in .desktop file within `/usr/share/xsessions`)
 
+        
+
             session=plasma
         geometry=1920x1080
             localhost
-        alwaysshared
+            alwaysshared
+        
+        
         `systemctl start vncserver@:1`(Start vncserver on display 1)
         
         `sudo systemctl enable vncserver@:1`(Start vncserver on display 1 on boot)
@@ -406,10 +410,11 @@
     * If CLI qemu is opened, vnc won't work and vice versa
     * If vnc works, then CLI qemu may be black screen. To make CLI qemu work again, comment out settings in /etc/tigervnc/vncserver.users
 
-### References: 
+    References: 
 
-- [tigervnc, i.e. vncserver](https://wiki.archlinux.org/index.php/TigerVNC)
-* X11 forwarding (ToDo)
+    * [tigervnc, i.e. vncserver](https://wiki.archlinux.org/index.php/TigerVNC)
+
+### X11 forwarding (ToDo)
 
 ## References
 
