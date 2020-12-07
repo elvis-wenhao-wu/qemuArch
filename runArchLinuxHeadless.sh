@@ -1,5 +1,6 @@
 #!/bin/zsh
 
+cd /Users/wenhaowu/QEMU/ &&
 qemu-system-x86_64 \
     -k en-us \
     -smp 2 \

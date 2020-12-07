@@ -165,6 +165,7 @@
     `grub-install /dev/sda`
 
     `sudo grub-mkconfig -o /boot/grub/grub.cfg`
+
 * exit mechanism
 
     `exit`
